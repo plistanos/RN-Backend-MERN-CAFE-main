@@ -34,15 +34,15 @@ const UsuarioSchema = Schema({
         default: false
     },
     direccion: {
-        type: string,
+        type: String,
         require: [true, "La dirección es obligatoria"],
     },
     establecimiento: {
-        type: string,
+        type: String,
         require: [true, "El establecimiento es obligatorio"]
     },
     rut: {
-        type: string,
+        type: String,
         require: [true, "El rut es obligatorio"]
     }
 });
