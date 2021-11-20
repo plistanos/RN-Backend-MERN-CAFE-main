@@ -3,13 +3,13 @@ const { check } = require('express-validator');
 
 const { validarJWT, validarCampos, esAdminRole } = require('../middlewares');
 
-const { crearProducto,
-        obtenerProductos,
-        obtenerProducto,
-        actualizarProducto, 
-        borrarProducto } = require('../controllers/productos');
+const { activityGet,
+        activityPost,
+        activityDelete,
+        activityPatch, 
+        activityPut } = require('../controllers/Activities');
 
-const { existeCategoriaPorId, existeProductoPorId } = require('../helpers/db-validators');
+const { existeCategoriaPorId, existeActivityPorId } = require('../helpers/db-validators');
 
 const router = Router();
 
@@ -18,14 +18,14 @@ const router = Router();
  */
 
 //  Obtener todas las categorias - publico
-router.get('/', obtenerProductos );
+router.get('/', activityGet );
 
 // Obtener una categoria por id - publico
 router.get('/:id',[
     check('id', 'No es un id de Mongo válido').isMongoId(),
-    check('id').custom( existeProductoPorId ),
+    check('id').custom( existeActivityPorId ),
     validarCampos,
-], obtenerProducto );
+], activityPost );
 
 // Crear categoria - privado - cualquier persona con un token válido
 router.post('/', [ 
@@ -34,24 +34,24 @@ router.post('/', [
     check('categoria','No es un id de Mongo').isMongoId(),
     check('categoria').custom( existeCategoriaPorId ),
     validarCampos
-], crearProducto );
+], activityPut );
 
 // Actualizar - privado - cualquiera con token válido
 router.put('/:id',[
     validarJWT,
     // check('categoria','No es un id de Mongo').isMongoId(),
-    check('id').custom( existeProductoPorId ),
+    check('id').custom( existeActivityPorId ),
     validarCampos
-], actualizarProducto );
+], activityPatch );
 
 // Borrar una categoria - Admin
 router.delete('/:id',[
     validarJWT,
     esAdminRole,
     check('id', 'No es un id de Mongo válido').isMongoId(),
-    check('id').custom( existeProductoPorId ),
+    check('id').custom( existeActivityPorId ),
     validarCampos,
-], borrarProducto);
+], activityDelete);
 
 
 module.exports = router;

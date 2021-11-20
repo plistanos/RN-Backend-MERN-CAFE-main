@@ -42,11 +42,11 @@ const existeCategoriaPorId = async( id ) => {
 /**
  * Productos
  */
-const existeProductoPorId = async( id ) => {
+const existeActivityPorId = async( id ) => {
 
     // Verificar si el correo existe
-    const existeProducto = await Producto.findById(id);
-    if ( !existeProducto ) {
+    const existeActivity = await Activity.findById(id);
+    if ( !existeActivity ) {
         throw new Error(`El id no existe ${ id }`);
     }
 }
@@ -69,7 +69,7 @@ module.exports = {
     emailExiste,
     existeUsuarioPorId,
     existeCategoriaPorId,
-    existeProductoPorId,
+    existeActivityPorId,
     coleccionesPermitidas
 }
 
