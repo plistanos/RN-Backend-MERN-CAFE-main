@@ -28,7 +28,11 @@ const ActivitySchema = Schema({
         ref: 'Categoria',
         required: true
     },
-    descripcion: { type: String },
+    descripcion: { 
+        type: String,
+        required: true,
+        default: '' 
+    },
     disponible: { type: Boolean, default: true },
     img: { type: String },
 });
