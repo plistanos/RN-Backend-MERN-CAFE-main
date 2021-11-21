@@ -4,7 +4,7 @@ const { Activity } = require('../models');
 
 const activityGet = async(req, res = response ) => {
 
-    const { limite = 5, desde = 0 } = req.query;
+    const { limite = 20, desde = 0 } = req.query;
     const query = { estado: true };
 
     const [ total, activities ] = await Promise.all([
