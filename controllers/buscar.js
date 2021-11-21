@@ -1,12 +1,12 @@
 const { response } = require('express');
 const { ObjectId } = require('mongoose').Types;
 
-const { Usuario, Categoria, Producto } = require('../models');
+const { Usuario, Categoria, Activity } = require('../models');
 
 const coleccionesPermitidas = [
     'usuarios',
     'categorias',
-    'productos',
+    'activities',
     'roles'
 ];
 
@@ -53,24 +53,24 @@ const buscarCategorias = async( termino = '', res = response ) => {
 
 }
 
-const buscarProductos = async( termino = '', res = response ) => {
+const buscarActivities = async( termino = '', res = response ) => {
 
     const esMongoID = ObjectId.isValid( termino ); // TRUE 
 
     if ( esMongoID ) {
-        const producto = await Producto.findById(termino)
+        const activity = await Activity.findById(termino)
                             .populate('categoria','nombre');
         return res.json({
-            results: ( producto ) ? [ producto ] : []
+            results: ( activity ) ? [ activity ] : []
         });
     }
 
     const regex = new RegExp( termino, 'i' );
-    const productos = await Producto.find({ nombre: regex, estado: true })
+    const activities = await Activity.find({ nombre: regex, estado: true })
                             .populate('categoria','nombre')
 
     res.json({
-        results: productos
+        results: activities
     });
 
 }
@@ -93,8 +93,8 @@ const buscar = ( req, res = response ) => {
         case 'categorias':
             buscarCategorias(termino, res);
         break;
-        case 'productos':
-            buscarProductos(termino, res);
+        case 'activities':
+            buscarActivities(termino, res);
         break;
 
         default:
