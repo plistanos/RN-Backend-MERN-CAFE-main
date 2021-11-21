@@ -4,7 +4,6 @@ const { Activity } = require('../models');
 
 const activityGet = async(req, res = response ) => {
 
-    const { limite = 20, desde = 0 } = req.query;
     const query = { estado: true };
 
     const [ total, activities ] = await Promise.all([
@@ -12,8 +11,6 @@ const activityGet = async(req, res = response ) => {
         Activity.find(query)
             .populate('usuario', 'nombre')
             .populate('categoria', 'nombre')
-            .skip( Number( desde ) )
-            .limit(Number( limite ))
     ]);
 
     res.json({
