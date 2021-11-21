@@ -22,6 +22,7 @@ const ActivitySchema = Schema({
     },
     tickets: {
         type: Number,
+        default: 0
     },
     categoria: {
         type: Schema.Types.ObjectId,
