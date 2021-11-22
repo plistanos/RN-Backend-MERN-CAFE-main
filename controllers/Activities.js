@@ -46,10 +46,11 @@ const activityPut = async(req, res = response ) => {
     // Generar la data a guardar
     const data = {
         ...body,
-        nombre: body.nombre.toUpperCase(),
-        usuario: req.usuario._id
+        nombre: body.nombre.toUpperCase()
     }
 
+    data.usuario.push(req.usuario._id);
+    
     const activity = new Activity( data );
 
     // Guardar DB
