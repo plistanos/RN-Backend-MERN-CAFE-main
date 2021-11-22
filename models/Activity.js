@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const usuario = require('./usuario');
 
 const ActivitySchema = Schema({
     nombre: {
@@ -11,17 +12,12 @@ const ActivitySchema = Schema({
         default: true,
         required: true
     },
-    usuario: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Usuario',
-            required: true
-        },{
-            type: Schema.Types.ObjectId,
-            ref: 'Usuario',
-            required: true
-        }
-    ],
+    usuario: {
+        type: Schema.Types.ObjectId, 
+        ref: 'Usuario',
+        required: true
+    },
+    participantes: {type: Array[Schema.Types.ObjectId]=[] },
     precio: {
         type: Number,
         default: 0

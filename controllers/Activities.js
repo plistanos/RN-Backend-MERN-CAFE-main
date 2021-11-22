@@ -1,4 +1,4 @@
-const { response } = require('express');
+const { response, request } = require('express');
 const { Activity } = require('../models');
 
 
@@ -49,7 +49,9 @@ const activityPut = async(req, res = response ) => {
         nombre: body.nombre.toUpperCase()
     }
 
-    data.usuario.push(req.usuario._id);
+    data.usuario = req.usuario._id;
+    data.participantes=[];
+    data.participantes.push(data.usuario);
 
     const activity = new Activity( data );
 
@@ -59,26 +61,30 @@ const activityPut = async(req, res = response ) => {
         .populate('usuario', 'nombre')
         .populate('categoria', 'nombre')
         .execPopulate();
-
+    
     res.status(201).json( nuevoActivity );
 
 }
 
-const activityPatch = async( req, res = response ) => {
+const activityPatch = async( req = request, res = response ) => {
 
     const { id } = req.params;
     const { estado, usuario, ...data } = req.body;
     if( data.nombre ) {
         data.nombre  = data.nombre.toUpperCase();
     }
-
-    data.usuario.push(req.usuario._id);
+    data.usuario = req.usuario._id;
+    const activityData = await Activity.findById(id);
+    
+    activityData.participantes.push(data.usuario);
+    data.participantes = activityData.participantes;
 
     const activity = await Activity.findByIdAndUpdate(id, data, { new: true });
 
     await activity
         .populate('usuario', 'nombre')
         .populate('categoria', 'nombre')
+        .populate('participantes', 'nombre')
         .execPopulate();
         
     res.json( activity );
@@ -88,8 +94,8 @@ const activityPatch = async( req, res = response ) => {
 const activityDelete = async(req, res = response ) => {
 
     const { id } = req.params;
-    const activityDel = await Activity.findByIdAndUpdate( id, { estado: false }, {new: true });
-
+    // const activityDel = await Activity.findByIdAndUpdate( id, { estado: false }, {new: true });
+    const activityDel = await Activity.findByIdAndDelete( id);
     res.json( activityDel );
 }
 
