@@ -67,12 +67,11 @@ const activityPatch = async( req, res = response ) => {
 
     const { id } = req.params;
     const { estado, usuario, ...data } = req.body;
-
     if( data.nombre ) {
         data.nombre  = data.nombre.toUpperCase();
     }
 
-    data.usuario = req.usuario._id;
+    data.usuario.push(req.usuario._id);
 
     const activity = await Activity.findByIdAndUpdate(id, data, { new: true });
 
