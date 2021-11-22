@@ -11,11 +11,11 @@ const ActivitySchema = Schema({
         default: true,
         required: true
     },
-    usuario: [{
+    usuario: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario',
         required: true
-    }],
+    },
     precio: {
         type: Number,
         default: 0
