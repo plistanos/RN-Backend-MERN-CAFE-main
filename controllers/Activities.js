@@ -49,7 +49,7 @@ const activityPut = async(req, res = response ) => {
         nombre: body.nombre.toUpperCase()
     }
 
-    data.usuario = req.usuario._id;
+    data.usuario.push(req.usuario._id);
 
     const activity = new Activity( data );
 
@@ -72,7 +72,7 @@ const activityPatch = async( req, res = response ) => {
         data.nombre  = data.nombre.toUpperCase();
     }
 
-    data.usuario = req.usuario._id;
+    data.usuario.push(req.usuario._id);
 
     const activity = await Activity.findByIdAndUpdate(id, data, { new: true });
 
