@@ -52,7 +52,6 @@ const activityPut = async(req, res = response ) => {
     data.ticketsDisponibles = data.tickets;
     data.usuario = req.usuario._id;
     data.participantes=[];
-    data.participantes.push(data.usuario);
 
     const activity = new Activity( data );
 
@@ -68,7 +67,7 @@ const activityPut = async(req, res = response ) => {
 }
 
 const activityPatch = async( req = request, res = response ) => {
-    
+
     const { id } = req.params;
     const { estado, usuario, ...data } = req.body;
 
