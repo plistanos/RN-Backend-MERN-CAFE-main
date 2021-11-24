@@ -11,6 +11,7 @@ const activityGet = async(req, res = response ) => {
         Activity.find(query)
             .populate('usuario', 'nombre')
             .populate('categoria', 'nombre')
+            .execPopulate()
     ]);
 
     res.json({
@@ -48,7 +49,7 @@ const activityPut = async(req, res = response ) => {
         ...body,
         nombre: body.nombre.toUpperCase()
     }
-
+    data.ticketsDisponibles = data.tickets;
     data.usuario = req.usuario._id;
     data.participantes=[];
     data.participantes.push(data.usuario);
@@ -70,13 +71,11 @@ const activityPatch = async( req = request, res = response ) => {
 
     const { id } = req.params;
     const { estado, usuario, ...data } = req.body;
-    if( data.nombre ) {
-        data.nombre  = data.nombre.toUpperCase();
-    }
     data.usuario = req.usuario._id;
     const activityData = await Activity.findById(id);
-    
+    const ticketsDisponibles = activityData.ticketsDisponibles;
     activityData.participantes.push(data.usuario);
+    data.ticketsDisponibles = ticketsDisponibles - 1;
     data.participantes = activityData.participantes;
 
     const activity = await Activity.findByIdAndUpdate(id, data, { new: true });
@@ -84,7 +83,6 @@ const activityPatch = async( req = request, res = response ) => {
     await activity
         .populate('usuario', 'nombre')
         .populate('categoria', 'nombre')
-        .populate('participantes', 'nombre')
         .execPopulate();
         
     res.json( activity );

@@ -17,12 +17,16 @@ const ActivitySchema = Schema({
         ref: 'Usuario',
         required: true
     },
-    participantes: {type: Array[Schema.Types.ObjectId]=[] },
+    participantes: {type: Array },
     precio: {
         type: Number,
         default: 0
     },
     tickets: {
+        type: Number,
+        default: 0
+    },
+    ticketsDisponibles: {
         type: Number,
         default: 0
     },
