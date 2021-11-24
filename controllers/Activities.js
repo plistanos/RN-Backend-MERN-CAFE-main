@@ -68,9 +68,11 @@ const activityPut = async(req, res = response ) => {
 }
 
 const activityPatch = async( req = request, res = response ) => {
-
+    
     const { id } = req.params;
     const { estado, usuario, ...data } = req.body;
+
+
     data.usuario = req.usuario._id;
     const activityData = await Activity.findById(id);
     const ticketsDisponibles = activityData.ticketsDisponibles;
@@ -83,7 +85,7 @@ const activityPatch = async( req = request, res = response ) => {
     await activity
         .populate('usuario', 'nombre')
         .populate('categoria', 'nombre')
-        .execPopulate();
+        
         
     res.json( activity );
 
