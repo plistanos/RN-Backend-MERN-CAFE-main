@@ -11,7 +11,7 @@ const activityGet = async(req, res = response ) => {
         Activity.find(query)
             .populate('usuario', 'nombre')
             .populate('categoria', 'nombre')
-            .execPopulate()
+            
     ]);
 
     res.json({
