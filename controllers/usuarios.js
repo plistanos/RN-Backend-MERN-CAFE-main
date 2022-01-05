@@ -5,6 +5,7 @@ const bcryptjs = require('bcryptjs');
 const Usuario = require('../models/usuario');
 const { generarJWT } = require('../helpers');
 const nodemailer = require('nodemailer');
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth:{
@@ -13,6 +14,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 const message = "cuenta registrada"; 
+
 const usuariosGet = async(req = request, res = response) => {
 
     const { limite = 10, desde = 0 } = req.query;
@@ -47,7 +49,7 @@ const usuariosPost = async(req, res = response) => {
         subject: 'correo de verificacion',
         text: message
     };
-    transporter.sendMail(mailOptions,(error,info)=>{
+    transporter.sendMail(mailOptions,async(error,info)=>{
         if(error){
             res.json({
                 error
