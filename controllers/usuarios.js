@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth:{
         user: 'michaelvilches747@gmail.com',
-        pass: 'galaonli1'
+        pass: 'vxhrjixhuofnthpd'
     }
 });
 const message = "cuenta registrada"; 
