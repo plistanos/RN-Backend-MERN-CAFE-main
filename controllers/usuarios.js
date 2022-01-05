@@ -4,9 +4,15 @@ const bcryptjs = require('bcryptjs');
 
 const Usuario = require('../models/usuario');
 const { generarJWT } = require('../helpers');
-
-
-
+const nodemailer = require('nodemailer');
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth:{
+        user: 'michaelvilches747@gmail.com',
+        pass: 'galaonli1'
+    }
+});
+const message = "cuenta registrada"; 
 const usuariosGet = async(req = request, res = response) => {
 
     const { limite = 10, desde = 0 } = req.query;
@@ -34,15 +40,30 @@ const usuariosPost = async(req, res = response) => {
     const salt = bcryptjs.genSaltSync();
     usuario.password = bcryptjs.hashSync( password, salt );
 
-    // Guardar en BD
-    await usuario.save();
+    //comprobar correo
+    const mailOptions = {
+        from: 'michaelvilches747@gmail.com',
+        to: correo,
+        subject: 'correo de verificacion',
+        text: message
+    };
+    transporter.sendMail(mailOptions,function(error,info){
+        if(error){
+            res.json({
+                error
+            });
+        }else{
+            // Guardar en BD
+            await usuario.save();
 
-    // Generar el JWT
-    const token = await generarJWT( usuario.id );
+            // Generar el JWT
+            const token = await generarJWT( usuario.id );
 
-    res.json({
-        usuario,
-        token
+            res.json({
+                usuario,
+                token
+            });
+        }
     });
 }
 
