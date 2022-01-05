@@ -60,10 +60,10 @@ const usuariosPost = async(req, res = response) => {
 
             // Generar el JWT
             const token = await generarJWT( usuario.id );
-            console.log(info)
             res.json({
                 usuario,
-                token
+                token,
+                info
             });
         }
     });
