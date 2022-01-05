@@ -4,16 +4,16 @@ const bcryptjs = require('bcryptjs');
 
 const Usuario = require('../models/usuario');
 const { generarJWT } = require('../helpers');
-const nodemailer = require('nodemailer');
+// const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth:{
-        user: 'michaelvilches747@gmail.com',
-        pass: 'vxhrjixhuofnthpd'
-    }
-});
-const message = "cuenta registrada"; 
+// const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth:{
+//         user: 'michaelvilches747@gmail.com',
+//         pass: 'vxhrjixhuofnthpd'
+//     }
+// });
+// const message = "cuenta registrada"; 
 
 const usuariosGet = async(req = request, res = response) => {
 
@@ -42,19 +42,19 @@ const usuariosPost = async(req, res = response) => {
     const salt = bcryptjs.genSaltSync();
     usuario.password = bcryptjs.hashSync( password, salt );
 
-    //comprobar correo
-    const mailOptions = {
-        from: 'michaelvilches747@gmail.com',
-        to: correo,
-        subject: 'correo de verificacion',
-        text: message
-    };
-    transporter.sendMail(mailOptions,async(error,info)=>{
-        if(error){
-            res.json({
-                error
-            })
-        }else{
+    // //comprobar correo
+    // const mailOptions = {
+    //     from: 'michaelvilches747@gmail.com',
+    //     to: correo,
+    //     subject: 'correo de verificacion',
+    //     text: message
+    // };
+    // transporter.sendMail(mailOptions,async(error,info)=>{
+    //     if(error){
+    //         res.json({
+    //             error
+    //         })
+    //     }else{
             // Guardar en BD
             await usuario.save();
 
@@ -65,8 +65,8 @@ const usuariosPost = async(req, res = response) => {
                 token,
                 info
             });
-        }
-    });
+        // }
+    // });
     
 }
 
