@@ -54,18 +54,17 @@ const usuariosPost = async(req, res = response) => {
             res.json({
                 error
             })
-        }else{
-            // Guardar en BD
-            await usuario.save();
-
-            // Generar el JWT
-            const token = await generarJWT( usuario.id );
-
-            res.json({
-                usuario,
-                token
-            });
         }
+    });
+    // Guardar en BD
+    await usuario.save();
+
+    // Generar el JWT
+    const token = await generarJWT( usuario.id );
+
+    res.json({
+        usuario,
+        token
     });
 }
 
