@@ -56,16 +56,16 @@ const usuariosPost = async(req, res = response) => {
             })
         }
     });
-    // Guardar en BD
-    await usuario.save();
+    // // Guardar en BD
+    // await usuario.save();
 
-    // Generar el JWT
-    const token = await generarJWT( usuario.id );
+    // // Generar el JWT
+    // const token = await generarJWT( usuario.id );
 
-    res.json({
-        usuario,
-        token
-    });
+    // res.json({
+    //     usuario,
+    //     token
+    // });
 }
 
 const usuariosPut = async(req, res = response) => {
