@@ -47,11 +47,11 @@ const usuariosPost = async(req, res = response) => {
         subject: 'correo de verificacion',
         text: message
     };
-    transporter.sendMail(mailOptions,function(error,info){
+    transporter.sendMail(mailOptions,(error,info)=>{
         if(error){
             res.json({
                 error
-            });
+            })
         }else{
             // Guardar en BD
             await usuario.save();
