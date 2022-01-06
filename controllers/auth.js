@@ -6,6 +6,17 @@ const Usuario = require('../models/usuario');
 const { generarJWT } = require('../helpers/generar-jwt');
 const { googleVerify } = require('../helpers/google-verify');
 
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth:{
+        user: 'michaelvilches747@gmail.com',
+        pass: 'vxhrjixhuofnthpd'
+    }
+});
+
+
 
 const login = async(req, res = response) => {
 
@@ -52,7 +63,41 @@ const login = async(req, res = response) => {
     }   
 
 }
+const random = (min, max) => {
+    return Math.floor((Math.random() * (max - min + 1)) + min);
+}
 
+const validarEmail = async(req,res = response) => {
+    const { correo, name } = req.body;
+    const state = 1
+    
+    // Generar código
+    const aleatorio = random(1000,9999)
+
+    // Crear mensaje
+
+    const message = `Hola ${name}!, Su codigo de verificación es : ${aleatorio}` 
+
+    // Enviar email
+    const mailOptions = {
+        from: 'michaelvilches747@gmail.com',
+        to: correo,
+        subject: 'correo de verificacion',
+        text: message
+    }
+    transporter.sendMail(mailOptions,(error,info)=>{
+        if(error){
+            state = 0
+        }else{
+            state = 1
+            
+        }
+    });
+    res.json({
+        state,
+        aleatorio
+    })
+}
 
 const googleSignin = async(req, res = response) => {
 
@@ -121,5 +166,6 @@ const validarTokenUsuario = async (req, res = response ) => {
 module.exports = {
     login,
     googleSignin,
-    validarTokenUsuario
+    validarTokenUsuario,
+    validarEmail
 }
