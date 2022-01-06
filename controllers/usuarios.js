@@ -41,8 +41,7 @@ const usuariosPost = async(req, res = response) => {
     const token = await generarJWT( usuario.id );
     res.json({
         usuario,
-        token,
-        info
+        token
     });
 }
 
