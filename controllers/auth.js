@@ -82,7 +82,7 @@ const validarEmail = async(req,res = response) => {
     const mailOptions = {
         from: 'michaelvilches747@gmail.com',
         to: correo,
-        subject: 'correo de verificacion',
+        subject: 'Correo de verificacion',
         text: message
     }
     transporter.sendMail(mailOptions,(error,info)=>{
@@ -93,6 +93,7 @@ const validarEmail = async(req,res = response) => {
             
         }
     });
+    // retornar estado y codigo
     res.json({
         state,
         aleatorio
