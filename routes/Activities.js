@@ -7,7 +7,8 @@ const { activityGet,
         activityPost,
         activityDelete,
         activityPatch, 
-        activityPut } = require('../controllers/Activities');
+        activityPut,
+        convertKMLtoJSON } = require('../controllers/Activities');
 
 const { existeCategoriaPorId, existeActivityPorId } = require('../helpers/db-validators');
 
@@ -19,6 +20,8 @@ const router = Router();
 
 //  Obtener todas las categorias - publico
 router.get('/', activityGet );
+
+router.get('/geojson', convertKMLtoJSON );
 
 // Obtener una categoria por id - publico
 router.get('/:id',[

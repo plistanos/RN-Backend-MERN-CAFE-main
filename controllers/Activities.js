@@ -1,5 +1,8 @@
 const { response, request } = require('express');
 const { Activity } = require('../models');
+const fs = require('fs');
+var tj = require('@mapbox/togeojson')
+const DOMParser = require('xmldom').DOMParser;
 
 
 const activityGet = async(req, res = response ) => {
@@ -98,13 +101,22 @@ const activityDelete = async(req, res = response ) => {
     res.json( activityDel );
 }
 
+const convertKMLtoJSON = (req, res = response) => {
+    
+    var kml = new DOMParser().parseFromString(fs.readFileSync('./uploads/doc.kml','utf8'));
 
+    var converted = tj.kml(kml);
 
+    var convertedWithStyles = tj.kml(kml, {styles:true});
+
+    res.json(converted);
+}
 
 module.exports = {
     activityDelete,
     activityGet,
     activityPatch,
     activityPut,
-    activityPost
+    activityPost,
+    convertKMLtoJSON
 }
