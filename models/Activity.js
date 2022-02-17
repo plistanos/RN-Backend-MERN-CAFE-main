@@ -42,6 +42,9 @@ const ActivitySchema = Schema({
     },
     disponible: { type: Boolean, default: true },
     img: { type: String },
+    latitude:{type: Number},
+    longitude:{type: Number},
+    date:{type: String},
 });
 
 
