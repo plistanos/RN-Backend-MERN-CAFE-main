@@ -29,7 +29,7 @@ const InformacionSchema = Schema({
         default: '' 
     },
     img: { type: String },
-    // fecha: { type: Date }
+    date: { type: String }
 });
 
 InformacionSchema.methods.toJSON = function() {

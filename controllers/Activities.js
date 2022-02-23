@@ -92,6 +92,29 @@ const activityPatch = async( req = request, res = response ) => {
     res.json( activity );
 
 }
+const addParticipante = async( req = request, res = response ) => {
+
+    const { id } = req.params;
+    const { estado, usuario, ...data } = req.body;
+
+
+    data.usuario = req.usuario._id;
+    const activityData = await Activity.findById(id);
+    const ticketsDisponibles = activityData.ticketsDisponibles;
+    activityData.participantes.push(data.usuario);
+    data.ticketsDisponibles = ticketsDisponibles - 1;
+    data.participantes = activityData.participantes;
+
+    const activity = await Activity.findByIdAndUpdate(id, data, { new: true });
+
+    await activity
+        .populate('usuario', 'nombre')
+        .populate('categoria', 'nombre')
+        
+        
+    res.json( activity );
+
+}
 
 const activityDelete = async(req, res = response ) => {
 

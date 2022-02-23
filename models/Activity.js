@@ -17,10 +17,18 @@ const ActivitySchema = Schema({
         ref: 'Usuario',
         required: true
     },
-    participantes: {type: Array },
+    participantes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+        required: true
+    }],
     precio: {
         type: Number,
         default: 0
+    },
+    freePass: {
+        type: Boolean,
+        default: false
     },
     tickets: {
         type: Number,
@@ -30,21 +38,43 @@ const ActivitySchema = Schema({
         type: Number,
         default: 0
     },
-    categoria: {
+    categoria: [{
         type: Schema.Types.ObjectId,
         ref: 'Categoria',
         required: true
-    },
+    }],
     descripcion: { 
         type: String,
         required: true,
         default: '' 
     },
-    disponible: { type: Boolean, default: true },
-    img: { type: String },
-    latitude:{type: Number},
-    longitude:{type: Number},
-    date:{type: String},
+    disponible: { 
+        type: Boolean,
+        default: true 
+    },
+    img: { 
+        type: String 
+    },
+    latitude:{
+        type: Number,
+        required: true
+    },
+    longitude:{
+        type: Number,
+        required: true
+    },
+    date:{
+        type: String,
+        required: true
+    },
+    fono:{
+        type: String,
+        required: true
+    },
+    contactEmail:{
+        type: String,
+        required: true
+    }
 });
 
 

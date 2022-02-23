@@ -44,7 +44,13 @@ const UsuarioSchema = Schema({
     rut: {
         type: String,
         require: [true, "El rut es obligatorio"]
-    }
+    },
+    actividades:[{
+        type: Schema.Types.ObjectId,
+        ref: 'Activity',
+        default: []
+    }]
+
 });
 
 
