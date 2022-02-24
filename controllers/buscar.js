@@ -56,12 +56,31 @@ const buscarCategorias = async( termino = '', res = response ) => {
 const buscarActivities = async( termino = '', res = response ) => {
 
     const esMongoID = ObjectId.isValid( termino ); // TRUE 
-
+    const actividades = []
     if ( esMongoID ) {
         const activity = await Activity.findById(termino)
                             .populate('categoria','nombre');
+        
+
+        const arrayDate = activity.date.split(' ')
+        const DDMMYY = arrayDate[0].split('/')
+        const HHMM = arrayDate[1].split(':')
+        const fecha = new Date(
+            parseInt(DDMMYY[2]),
+            parseInt(DDMMYY[1]) - 1,
+            parseInt(DDMMYY[0]),
+            parseInt(HHMM[0]),
+            parseInt(HHMM[1])
+        )
+        const fechaActual = new Date(Date.now())
+        const id = activity._id
+        const actividad = null
+        if(fecha > fechaActual){
+            actividad = activity
+        }
+
         return res.json({
-            results: ( activity ) ? [ activity ] : []
+            results: ( actividad ) ? [ actividad ] : []
         });
     }
 
@@ -69,11 +88,32 @@ const buscarActivities = async( termino = '', res = response ) => {
     const activities = await Activity.find({ nombre: regex, estado: true })
                             .populate('categoria','nombre')
 
+    
+    activities.forEach((activity)=>{
+        const arrayDate = activity.date.split(' ')
+        
+        const DDMMYY = arrayDate[0].split('/')
+        const HHMM = arrayDate[1].split(':')
+        const fecha = new Date(
+            parseInt(DDMMYY[2]),
+            parseInt(DDMMYY[1]) - 1,
+            parseInt(DDMMYY[0]),
+            parseInt(HHMM[0]),
+            parseInt(HHMM[1])
+        )
+        const fechaActual = new Date(Date.now())
+        const id = activity._id
+        if(fecha > fechaActual){     
+            actividades.push(activity)
+        }
+        
+    })
     res.json({
-        results: activities
+        results: actividades
     });
 
 }
+
 
 
 const buscar = ( req, res = response ) => {

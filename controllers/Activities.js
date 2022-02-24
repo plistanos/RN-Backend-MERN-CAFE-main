@@ -120,13 +120,8 @@ const deleteActivitiesByDate = async( req = request, res = response ) => {
 
     const query = { estado: true };
 
-    const [ total, activities ] = await Promise.all([
-        Activity.countDocuments(query),
-        Activity.find(query)
-            .populate('usuario', 'nombre')
-            .populate('categoria', 'nombre')
-            
-    ]);
+    const activities = await Activity.find(query)
+       
     var actividades = []
 
     activities.forEach((activity)=>{
@@ -142,15 +137,20 @@ const deleteActivitiesByDate = async( req = request, res = response ) => {
             parseInt(HHMM[1])
         )
         const fechaActual = new Date(Date.now())
+        const id = activity._id
         if(fecha < fechaActual){
             activity.estado = false
-            const actividad = Activity.findByIdAndUpdate(activity._id,{estado: false},{new:true})
+            
+            const actividad = Activity.findOneAndUpdate(id,activity,{new:true})
+            
+
             
         }else{
+            activity.estado = true
             actividades.push(activity)
+            const actividad = Activity.findByIdAndUpdate(id,activity,{new:true})
         }
-
-        console.log(activity)
+        
     })
         
         
