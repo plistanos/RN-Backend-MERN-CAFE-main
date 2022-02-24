@@ -33,7 +33,7 @@ const obtenerCategoria = async(req, res = response ) => {
 
 const crearCategoria = async(req, res = response ) => {
 
-    const nombre = req.body.nombre.toUpperCase();
+    // const nombre = req.body.nombre.toUpperCase();
 
     const categoriaDB = await Categoria.findOne({ nombre });
 
