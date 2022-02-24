@@ -8,7 +8,8 @@ const { activityGet,
         activityDelete,
         activityPatch, 
         activityPut,
-        convertKMLtoJSON } = require('../controllers/Activities');
+        convertKMLtoJSON,
+        deleteActivitiesByDate } = require('../controllers/Activities');
 
 const { existeCategoriaPorId, existeActivityPorId } = require('../helpers/db-validators');
 
@@ -46,6 +47,9 @@ router.put('/:id',[
     check('id').custom( existeActivityPorId ),
     validarCampos
 ], activityPatch );
+
+router.post('/updateactivities',  deleteActivitiesByDate);
+
 
 // Borrar una categoria - Admin
 router.delete('/:id',[

@@ -116,6 +116,47 @@ const addParticipante = async( req = request, res = response ) => {
 
 }
 
+const deleteActivitiesByDate = async( req = request, res = response ) => {
+
+    const query = { estado: true };
+
+    const [ total, activities ] = await Promise.all([
+        Activity.countDocuments(query),
+        Activity.find(query)
+            .populate('usuario', 'nombre')
+            .populate('categoria', 'nombre')
+            
+    ]);
+    var actividades = []
+
+    activities.forEach((activity)=>{
+        const arrayDate = activity.date.split(' ')
+        
+        const DDMMYY = arrayDate[0].split('/')
+        const HHMM = arrayDate[1].split(':')
+        const fecha = new Date(
+            parseInt(DDMMYY[2]),
+            parseInt(DDMMYY[1]) - 1,
+            parseInt(DDMMYY[0]),
+            parseInt(HHMM[0]),
+            parseInt(HHMM[1])
+        )
+        const fechaActual = new Date(Date.now())
+        if(fecha < fechaActual){
+            activity.estado = false
+            const actividad = Activity.findByIdAndUpdate(activity._id,{estado: false},{new:true})
+            
+        }else{
+            actividades.push(activity)
+        }
+
+        console.log(activity)
+    })
+        
+        
+    res.json( actividades );
+
+}
 const activityDelete = async(req, res = response ) => {
 
     const { id } = req.params;
@@ -141,5 +182,6 @@ module.exports = {
     activityPatch,
     activityPut,
     activityPost,
-    convertKMLtoJSON
+    convertKMLtoJSON,
+    deleteActivitiesByDate
 }
