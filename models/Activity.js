@@ -38,11 +38,11 @@ const ActivitySchema = Schema({
         type: Number,
         default: 0
     },
-    categoria: [{
+    categoria: {
         type: Schema.Types.ObjectId,
         ref: 'Categoria',
         required: true
-    }],
+    },
     descripcion: { 
         type: String,
         required: true,
