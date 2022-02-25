@@ -56,12 +56,10 @@ const ActivitySchema = Schema({
         type: String 
     },
     latitude:{
-        type: Number,
-        required: true
+        type: Number
     },
     longitude:{
-        type: Number,
-        required: true
+        type: Number
     },
     date:{
         type: String,
