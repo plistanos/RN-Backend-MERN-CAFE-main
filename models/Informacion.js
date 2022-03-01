@@ -3,33 +3,39 @@ const usuario = require('./usuario');
 
 
 const InformacionSchema = Schema({
-    nombre: {
+    titulo: {
         type: String,
-        required: [true, 'El nombre es obligatorio'],
-        unique: true
+        required: true
     },
     estado: {
         type: Boolean,
         default: true,
         required: true
     },
-    usuario: {
-        type: Schema.Types.ObjectId, 
+    categoria: {
+        type: String,
+        required: true
+    },
+    usuarioEncargado: {
+        type: Schema.Types.ObjectId,
         ref: 'Usuario',
         required: true
     },
-    categoria: {
-        type: Schema.Types.ObjectId,
-        ref: 'Categoria',
+    descripcion: {
+        type: String,
         required: true
     },
-    descripcion: { 
+    imagen:{
         type: String,
-        required: true,
-        default: '' 
     },
-    img: { type: String },
-    date: { type: String }
+    fechaCreacion:{
+        type: String,
+        required: true
+    },
+    linkNoticia: {
+        type: String,
+    }
+   
 });
 
 InformacionSchema.methods.toJSON = function() {

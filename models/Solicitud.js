@@ -1,7 +1,9 @@
-const { Schema, model } = require('mongoose');
-const usuario = require('./usuario');
+const {Schema, model} = require('mongoose');
 
-const ActivitySchema = Schema({
+
+// Estructura de una Solicitud
+const SolicitudSchema = Schema({
+    
     titulo: {
         type: String,
         required: [true, 'El nombre es obligatorio'],
@@ -89,13 +91,14 @@ const ActivitySchema = Schema({
         type: String,
         required: true
     }
+    
+
 });
 
+SolicitudSchema.method('toJSON', function () {
+    const{__v, _id, ...object} = this.toObject();
+    object.id = _id;
+    return object;
+})
 
-ActivitySchema.methods.toJSON = function() {
-    const { __v, estado, ...data  } = this.toObject();
-    return data;
-}
-
-
-module.exports = model( 'Activity', ActivitySchema );
+module.exports = model('Solicitud', SolicitudSchema);
