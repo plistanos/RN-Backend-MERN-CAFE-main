@@ -54,7 +54,10 @@ const crearSolicitud = async(req, res = response) => {
         .populate('categoria', 'nombre')
         .execPopulate();
     
-    res.status(201).json( nuevoSolicitud );
+    res.status(201).json({
+        ok:true, 
+        nuevoSolicitud 
+    });
 }
 //Actualizar una solicitud
 const actualizarSolicitud = async (req, res = response) => {
