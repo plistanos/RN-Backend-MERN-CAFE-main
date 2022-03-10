@@ -14,14 +14,13 @@ const SolicitudSchema = Schema({
         default: true,
         required: true
     },
-    usuarioEncargado: {
+    usuario: {
         type: Schema.Types.ObjectId, 
         ref: 'Usuario',
         required: true
     },
     participantesInscritos: {
-        type: Number,
-        required: true
+        type: Number
     },
     participantes: [{
         type: Schema.Types.ObjectId,
@@ -97,7 +96,7 @@ const SolicitudSchema = Schema({
 
 SolicitudSchema.method('toJSON', function () {
     const{__v, _id, ...object} = this.toObject();
-    object.id = _id;
+   
     return object;
 })
 

@@ -12,7 +12,7 @@ const ActivitySchema = Schema({
         default: true,
         required: true
     },
-    usuarioEncargado: {
+    usuario: {
         type: Schema.Types.ObjectId, 
         ref: 'Usuario',
         required: true
