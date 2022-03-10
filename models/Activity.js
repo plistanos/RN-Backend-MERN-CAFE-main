@@ -67,7 +67,8 @@ const ActivitySchema = Schema({
     },
     fechaCreacion:{
         type: String,
-        required: true
+        required: true,
+        default: new Date(Date.now())
     },
     fechaRealizacion:{
         type: String,
