@@ -18,8 +18,7 @@ const ActivitySchema = Schema({
         required: true
     },
     participantesInscritos: {
-        type: Number,
-        required: true
+        type: Number
     },
     participantes: [{
         type: Schema.Types.ObjectId,
