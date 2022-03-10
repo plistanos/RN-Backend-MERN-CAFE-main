@@ -48,6 +48,10 @@ class Server {
         // CORS
         this.app.use( cors(this.corsOptions) );
 
+        this.app.all('*', (req, res, next) => {
+            res.header("Access-Control-Allow-Origin", "https://localhost:3000");
+            next();
+        });
         // Lectura y parseo del body
         this.app.use( express.json() );
 
