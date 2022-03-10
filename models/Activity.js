@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const usuario = require('./usuario');
 
 const ActivitySchema = Schema({
-    titulo: {
+    nombre: {
         type: String,
         required: [true, 'El nombre es obligatorio'],
         unique: true
