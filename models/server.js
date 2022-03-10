@@ -37,12 +37,17 @@ class Server {
     }
 
     
+    corsOptions ={
+        origin:'*', 
+        credentials:true,            //access-control-allow-credentials:true
+        optionSuccessStatus:200,
+    }
 
 
     middlewares() {
 
         // CORS
-        this.app.use( cors() );
+        this.app.use(cors(this.corsOptions));
 
         
         // Lectura y parseo del body
