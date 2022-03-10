@@ -4,7 +4,7 @@ const {Schema, model} = require('mongoose');
 // Estructura de una Solicitud
 const SolicitudSchema = Schema({
     
-    titulo: {
+    nombre: {
         type: String,
         required: [true, 'El nombre es obligatorio'],
         unique: true
@@ -58,7 +58,7 @@ const SolicitudSchema = Schema({
         type: Boolean,
         default: true 
     },
-    imagen: { 
+    img: { 
         type: String 
     },
     latitude:{
