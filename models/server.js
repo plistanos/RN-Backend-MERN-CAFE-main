@@ -36,22 +36,15 @@ class Server {
         await dbConnection();
     }
 
-    corsOptions ={
-        origin:'http://localhost:3000', 
-        credentials:true,            //access-control-allow-credentials:true
-        optionSuccessStatus:200,
-    }
+    
 
 
     middlewares() {
 
         // CORS
-        this.app.use( cors(this.corsOptions) );
+        this.app.use( cors() );
 
-        this.app.all('*', (req, res, next) => {
-            res.header("Access-Control-Allow-Origin", "https://localhost:3000");
-            next();
-        });
+        
         // Lectura y parseo del body
         this.app.use( express.json() );
 
