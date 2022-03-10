@@ -19,6 +19,7 @@ const usuariosGet = async(req = request, res = response) => {
     ]);
 
     res.json({
+        ok:true,
         total,
         usuarios
     });
@@ -40,6 +41,7 @@ const usuariosPost = async(req, res = response) => {
     // Generar el JWT
     const token = await generarJWT( usuario.id );
     res.json({
+        ok: true,
         usuario,
         token
     });
@@ -62,18 +64,49 @@ const usuariosPut = async(req, res = response) => {
 }
 
 const usuariosPatch = (req, res = response) => {
-    res.json({
-        msg: 'patch API - usuariosPatch'
-    });
+
+    const UsuarioID = req.params.id;
+    try {
+
+        const usuario = await Usuario.findById(UsuarioID);
+        if( !usuario){
+            res.status(404).json({
+                ok: false,
+                msg: 'Usuario Normal no existe por ese Id'
+            })
+        }
+
+
+        const nuevoUsuario = {
+            ...req.body,
+        }
+
+        const usuarioActualizado = await Usuario.findByIdAndUpdate(UsuarioID, nuevoUsuario, {new:true});
+        res.json({
+            ok: true,
+            usuarioNormal: usuarioActualizado
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error al actualizar un Usuario Normal'
+        });
+    }
 }
 
 const usuariosDelete = async(req, res = response) => {
 
     const { id } = req.params;
-    const usuario = await Usuario.findByIdAndUpdate( id, { estado: false } );
+    const usuario = await Usuario.findByIdAndDelete( id, { estado: false } );
 
     
-    res.json(usuario);
+    res.json({
+        ok :true,
+        msg: 'Usuario Normal Eliminado Correctamente',
+        usuario
+    });
 }
 
 

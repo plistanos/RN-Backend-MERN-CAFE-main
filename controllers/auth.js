@@ -28,6 +28,7 @@ const login = async(req, res = response) => {
         const usuario = await Usuario.findOne({ correo });
         if ( !usuario ) {
             return res.status(400).json({
+                ok:false,
                 msg: 'Usuario / Password no son correctos'
             });
         }
@@ -35,6 +36,7 @@ const login = async(req, res = response) => {
         // SI el usuario está activo
         if ( !usuario.estado ) {
             return res.status(400).json({
+                ok:false,
                 msg: 'Usuario / Password no son correctos'
             });
         }
@@ -43,6 +45,7 @@ const login = async(req, res = response) => {
         const validPassword = bcryptjs.compareSync( password, usuario.password );
         if ( !validPassword ) {
             return res.status(400).json({
+                ok :false,
                 msg: 'Usuario / Password no son correctos'
             });
         }
@@ -51,7 +54,7 @@ const login = async(req, res = response) => {
         const token = await generarJWT( usuario.id );
 
         res.json({
-            ok,
+            ok:true,
             usuario,
             token
         })
@@ -59,6 +62,7 @@ const login = async(req, res = response) => {
     } catch (error) {
         console.log(error)
         res.status(500).json({
+            ok: false,
             msg: 'Hable con el administrador'
         });
     }   
@@ -157,6 +161,7 @@ const validarTokenUsuario = async (req, res = response ) => {
     const token = await generarJWT( req.usuario._id );
     
     res.json({
+        ok:true,
         usuario: req.usuario,
         token: token,
     })

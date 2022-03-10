@@ -18,8 +18,9 @@ const activityGet = async(req, res = response ) => {
     ]);
 
     res.json({
+        ok:true,
         total,
-        activities
+        actividades
     });
 }
 
@@ -30,7 +31,10 @@ const activityPost = async(req, res = response ) => {
                             .populate('usuario', 'nombre')
                             .populate('categoria', 'nombre');
 
-    res.json( activity );
+    res.json( {
+        ok:true,
+        actividad:activity
+    } );
 
 }
 
@@ -65,7 +69,10 @@ const activityPut = async(req, res = response ) => {
         .populate('categoria', 'nombre')
         .execPopulate();
     
-    res.status(201).json( nuevoActivity );
+    res.status(201).json( {
+        ok:true,
+        actividad: nuevoActivity
+    } );
 
 }
 
@@ -92,27 +99,40 @@ const activityPatch = async( req = request, res = response ) => {
     res.json( activity );
 
 }
-const addParticipante = async( req = request, res = response ) => {
+const actualizarActividad = async( req = request, res = response ) => {
 
-    const { id } = req.params;
-    const { estado, usuario, ...data } = req.body;
+    const actividadId = req.params.id;
+
+    try {
+
+        const actividad = await Activity.findById(actividadId);
+        if( !actividad){
+            res.status(404).json({
+                ok: false,
+                msg: 'Actividad no existe por ese Id'
+            })
+        }
 
 
-    data.usuario = req.usuario._id;
-    const activityData = await Activity.findById(id);
-    const ticketsDisponibles = activityData.ticketsDisponibles;
-    activityData.participantes.push(data.usuario);
-    data.ticketsDisponibles = ticketsDisponibles - 1;
-    data.participantes = activityData.participantes;
+        const nuevaActividad = {
+            ...req.body,
+        }
 
-    const activity = await Activity.findByIdAndUpdate(id, data, { new: true });
+        const actividadActualizada = await Activity.findByIdAndUpdate(actividadId, nuevaActividad, {new:true});
+        res.json({
+            ok: true,
+            actividad: actividadActualizada
+        });
 
-    await activity
-        .populate('usuario', 'nombre')
-        .populate('categoria', 'nombre')
-        
-        
-    res.json( activity );
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
+
+
 
 }
 
@@ -162,7 +182,10 @@ const activityDelete = async(req, res = response ) => {
     const { id } = req.params;
     // const activityDel = await Activity.findByIdAndUpdate( id, { estado: false }, {new: true });
     const activityDel = await Activity.findByIdAndDelete( id);
-    res.json( activityDel );
+    res.json( {
+        ok:true,
+        activityDel
+    } );
 }
 
 const convertKMLtoJSON = (req, res = response) => {
@@ -183,5 +206,6 @@ module.exports = {
     activityPut,
     activityPost,
     convertKMLtoJSON,
-    deleteActivitiesByDate
+    deleteActivitiesByDate,
+    actualizarActividad
 }
