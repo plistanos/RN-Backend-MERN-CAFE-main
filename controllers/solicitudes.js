@@ -45,7 +45,7 @@ const crearSolicitud = async(req, res = response) => {
     data.usuario = req.usuario._id;
     data.participantes=[];
 
-    const solicitud = new Activity( data );
+    const solicitud = new Solicitud( data );
 
     // Guardar DB
     const nuevoSolicitud = await solicitud.save();

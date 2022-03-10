@@ -56,7 +56,7 @@ const ActivitySchema = Schema({
         type: Boolean,
         default: true 
     },
-    imagen: { 
+    img: { 
         type: String 
     },
     latitude:{
