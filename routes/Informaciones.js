@@ -3,11 +3,10 @@ const { check } = require('express-validator');
 
 const { validarJWT, validarCampos, esAdminRole } = require('../middlewares');
 
-const { informacionGet,
-        informacionPost,
-        informacionDelete,
-        informacionPatch, 
-        informacionPut } = require('../controllers/Informaciones');
+const { getInformaciones,
+crearInformacion,
+actualizarInformacion,
+eliminarInformacion } = require('../controllers/Informaciones');
 
 const { existeCategoriaPorId, existeInformacionPorId } = require('../helpers/db-validators');
 
@@ -18,39 +17,25 @@ const router = Router();
  */
 
 //  Obtener todas las categorias - publico
-router.get('/', informacionGet );
+router.get('/',getInformaciones);
 
-// Obtener una categoria por id - publico
-router.get('/:id',[
-    check('id', 'No es un id de Mongo válido').isMongoId(),
-    check('id').custom( existeInformacionPorId ),
-    validarCampos,
-], informacionPost );
+// Crear Informacion
+router.post(
+    '/',
+    [
+        check('titulo', 'El titulo es obligatorio').not().isEmpty(),
+        check('categoria', 'La categoria es obligatorio').not().isEmpty(),
+        check('descripcion', 'La descripcion es obligatorio').not().isEmpty(),
+        check('fechaCreacion', 'Fecha de creacion de la actividad es obligatoria').not().isEmpty(),
+        validarCampos
+    ],
+    crearInformacion);
 
-// Crear categoria - privado - cualquier persona con un token válido
-router.post('/', [ 
-    validarJWT,
-    check('nombre','El nombre es obligatorio').not().isEmpty(),
-    check('categoria','No es un id de Mongo').isMongoId(),
-    check('categoria').custom( existeCategoriaPorId ),
-    validarCampos
-], informacionPut );
+// Actulizar Informacion
+router.put('/:id',actualizarInformacion);
 
-// Actualizar - privado - cualquiera con token válido
-router.put('/:id',[
-    validarJWT,
-    // check('categoria','No es un id de Mongo').isMongoId(),
-    check('id').custom( existeInformacionPorId ),
-    validarCampos
-], informacionPatch );
-
-// Borrar una categoria - Admin
-router.delete('/:id',[
-    validarJWT,
-    esAdminRole,
-    check('id').custom( existeInformacionPorId ),
-    validarCampos,
-], informacionDelete);
+// Eliminar Informacion
+router.delete('/:id', eliminarInformacion);
 
 
 module.exports = router;
