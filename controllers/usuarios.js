@@ -63,7 +63,7 @@ const usuariosPut = async(req, res = response) => {
     res.json(usuario);
 }
 
-const usuariosPatch = (req, res = response) => {
+const usuariosPatch = async(req, res = response) => {
 
     const UsuarioID = req.params.id;
     try {

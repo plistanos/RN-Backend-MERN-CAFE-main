@@ -20,7 +20,7 @@ const activityGet = async(req, res = response ) => {
     res.json({
         ok:true,
         total,
-        actividades
+        actividades:activities
     });
 }
 
@@ -183,8 +183,9 @@ const activityDelete = async(req, res = response ) => {
     // const activityDel = await Activity.findByIdAndUpdate( id, { estado: false }, {new: true });
     const activityDel = await Activity.findByIdAndDelete( id);
     res.json( {
-        ok:true,
-        activityDel
+        ok: true,
+        msg: 'Actividad Eliminada Correctamente',
+        actividad: activityDel
     } );
 }
 
