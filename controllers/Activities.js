@@ -27,6 +27,7 @@ const activityGet = async(req, res = response ) => {
 const activityPost = async(req, res = response ) => {
 
     const { id } = req.params;
+    
     const activity = await Activity.findById( id )
                             .populate('usuario', 'nombre')
                             .populate('categoria', 'nombre');
