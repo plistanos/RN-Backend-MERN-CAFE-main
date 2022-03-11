@@ -40,7 +40,9 @@ class Server {
     corsOptions ={
         origin:'*', 
         // credentials:true,            //access-control-allow-credentials:true
-        // optionSuccessStatus:200,
+        optionSuccessStatus:200,
+        preflightContinue: true,
+        allowedHeaders: 'Content-Type'
     }
 
 
