@@ -56,7 +56,7 @@ const crearSolicitud = async(req, res = response) => {
     
     res.status(201).json({
         ok:true, 
-        nuevoSolicitud 
+        solicitud:nuevoSolicitud 
     });
 }
 //Actualizar una solicitud
