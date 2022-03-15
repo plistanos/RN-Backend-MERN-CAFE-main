@@ -72,7 +72,7 @@ const usuariosPatch = async(req, res = response) => {
         if( !usuario){
             res.status(404).json({
                 ok: false,
-                msg: 'Usuario Normal no existe por ese Id'
+                msg: 'Usuario no existe por ese Id'
             })
         }
 
