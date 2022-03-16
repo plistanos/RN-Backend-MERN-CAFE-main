@@ -26,7 +26,7 @@ const InformacionSchema = Schema({
         type: String,
         required: true
     },
-    imagen:{
+    img:{
         type: String,
     },
     fechaCreacion:{
