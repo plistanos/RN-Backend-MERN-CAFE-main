@@ -12,7 +12,7 @@ const router = Router();
 router.post( '/', validarArchivoSubir, cargarArchivo );
 
 router.put('/:coleccion/:id', [
-    validarArchivoSubir,
+    // validarArchivoSubir,
     check('id','El id debe de ser de mongo').isMongoId(),
     check('coleccion').custom( c => coleccionesPermitidas( c, ['usuarios','activities','informaciones','solicitudes'] ) ),
     validarCampos
