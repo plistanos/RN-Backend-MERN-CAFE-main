@@ -15,10 +15,11 @@ const getInformaciones = async(req, res = response) => {
 }
 
 const crearInformacion = async(req, res = response) => {
-    
-    const informacion = new Informacion( req.body );
+    const { estado, usuario, ...body } = req.body;
+
+    const informacion = new Informacion( body );
     try{
-        informacion.usuarioEncargado = req.uid;
+        informacion.usuarioEncargado = req.usuario._id;
         const informacionGuardada = await informacion.save()
 
         res.json({
