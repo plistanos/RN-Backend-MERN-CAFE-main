@@ -7,7 +7,7 @@ cloudinary.config( process.env.CLOUDINARY_URL );
 const { response } = require('express');
 const { subirArchivo } = require('../helpers');
 
-const { Usuario, Activity, Informacion } = require('../models');
+const { Usuario, Activity, Informacion, Solicitud } = require('../models');
 
 
 const cargarArchivo = async(req, res = response) => {
@@ -46,6 +46,24 @@ const actualizarImagen = async(req, res = response ) => {
 
         case 'activities':
             modelo = await Activity.findById(id);
+            if ( !modelo ) {
+                return res.status(400).json({
+                    msg: `No existe un producto con el id ${ id }`
+                });
+            }
+        
+        break;
+        case 'informaciones':
+            modelo = await Informacion.findById(id);
+            if ( !modelo ) {
+                return res.status(400).json({
+                    msg: `No existe un producto con el id ${ id }`
+                });
+            }
+        
+        break;
+        case 'solicitudes':
+            modelo = await Solicitud.findById(id);
             if ( !modelo ) {
                 return res.status(400).json({
                     msg: `No existe un producto con el id ${ id }`
@@ -116,6 +134,15 @@ const actualizarImagenCloudinary = async(req, res = response ) => {
             }
         
         break;
+        case 'solicitudes':
+            modelo = await Solicitud.findById(id);
+            if ( !modelo ) {
+                return res.status(400).json({
+                    msg: `No existe un producto con el id ${ id }`
+                });
+            }
+        
+        break;
     
         default:
             return res.status(500).json({ msg: 'Se me olvidó validar esto'});
@@ -162,6 +189,24 @@ const mostrarImagen = async(req, res = response ) => {
 
         case 'activities':
             modelo = await Producto.findById(id);
+            if ( !modelo ) {
+                return res.status(400).json({
+                    msg: `No existe un producto con el id ${ id }`
+                });
+            }
+        
+        break;
+        case 'informaciones':
+            modelo = await Informacion.findById(id);
+            if ( !modelo ) {
+                return res.status(400).json({
+                    msg: `No existe un producto con el id ${ id }`
+                });
+            }
+        
+        break;
+        case 'solicitudes':
+            modelo = await Solicitud.findById(id);
             if ( !modelo ) {
                 return res.status(400).json({
                     msg: `No existe un producto con el id ${ id }`
