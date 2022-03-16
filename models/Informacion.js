@@ -13,7 +13,8 @@ const InformacionSchema = Schema({
         required: true
     },
     categoria: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'Categoria',
         required: true
     },
     usuarioEncargado: {
