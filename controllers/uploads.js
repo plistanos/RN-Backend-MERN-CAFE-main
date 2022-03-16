@@ -7,7 +7,7 @@ cloudinary.config( process.env.CLOUDINARY_URL );
 const { response } = require('express');
 const { subirArchivo } = require('../helpers');
 
-const { Usuario, Activity } = require('../models');
+const { Usuario, Activity, Informacion } = require('../models');
 
 
 const cargarArchivo = async(req, res = response) => {
@@ -99,6 +99,16 @@ const actualizarImagenCloudinary = async(req, res = response ) => {
 
         case 'activities':
             modelo = await Activity.findById(id);
+            if ( !modelo ) {
+                return res.status(400).json({
+                    msg: `No existe un producto con el id ${ id }`
+                });
+            }
+        
+        break;
+
+        case 'informaciones':
+            modelo = await Informacion.findById(id);
             if ( !modelo ) {
                 return res.status(400).json({
                     msg: `No existe un producto con el id ${ id }`
