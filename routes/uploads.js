@@ -21,7 +21,7 @@ router.put('/:coleccion/:id', [
 
 router.get('/:coleccion/:id', [
     check('id','El id debe de ser de mongo').isMongoId(),
-    check('coleccion').custom( c => coleccionesPermitidas( c, ['usuarios','activities'] ) ),
+    check('coleccion').custom( c => coleccionesPermitidas( c, ['usuarios','activities','informaciones','solicitudes'] ) ),
     validarCampos
 ], mostrarImagen  )
 
