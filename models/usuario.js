@@ -34,13 +34,19 @@ const UsuarioSchema = Schema({
         default: false
     },
     direccion: {
-        type: String
+        type: String,
+        require: [true, "La dirección es obligatoria"],
+        default:''
     },
     establecimiento: {
-        type: String
+        type: String,
+        require: [true, "El establecimiento es obligatorio"],
+        default:''
     },
     rut: {
-        type: String
+        type: String,
+        require: [true, "El rut es obligatorio"],
+        default:''
     },
     actividades:[{
         type: Schema.Types.ObjectId,
