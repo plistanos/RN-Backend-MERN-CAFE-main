@@ -73,10 +73,6 @@ const ActivitySchema = Schema({
         type: String,
         required: true
     },
-    hora:{
-        type: String,
-        required: true
-    },
     fono:{
         type: String,
         required: true
