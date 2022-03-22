@@ -11,6 +11,7 @@ const { check } = require('express-validator')
 const { isDate } = require('../helpers/isDate');
 const { validarCampos } = require('../middlewares/validar-campos')
 const { validarJWT } = require('../middlewares/validar-jwt');
+const { existeCategoriaPorId, existeActivityPorId } = require('../helpers/db-validators');
 const {getSolicitudes,crearSolicitud,actualizarSolicitud,eliminarSolicitud} = require('../controllers/solicitudes');
 
 const router = Router();
