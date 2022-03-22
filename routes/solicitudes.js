@@ -26,14 +26,8 @@ router.get('/',getSolicitudes);
 router.post(
     '/',
     [
-        check('nombre', 'El titulo es obligatorio').not().isEmpty(),
-        check('categoria', 'La categoria es obligatorio').not().isEmpty(),
-        
-        check('descripcion', 'La descripcion es obligatorio').not().isEmpty(),
-        check('valorActividad', 'El valor de la actividad es obligatorio').not().isEmpty(),
-        check('fechaCreacion', 'Fecha de creacion de la actividad es obligatoria').not().isEmpty(),
-        check('fechaRealizacion', 'Fecha a realizar la actividad es obligatoria').not().isEmpty(),
-        check('hora', 'La hora de la actividad es obligatoria').not().isEmpty(),
+        check('categoria','No es un id de Mongo').isMongoId(),
+        ('categoria').custom( existeCategoriaPorId ),
         validarCampos
     ],
     crearSolicitud);

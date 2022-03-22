@@ -68,13 +68,10 @@ const SolicitudSchema = Schema({
     },
     fechaCreacion:{
         type: String,
-        required: true
+        required: true,
+        default: new Date(Date.now())
     },
     fechaRealizacion:{
-        type: String,
-        required: true
-    },
-    hora:{
         type: String,
         required: true
     },
