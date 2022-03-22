@@ -26,6 +26,8 @@ router.get('/',getSolicitudes);
 router.post(
     '/',
     [
+        validarJWT,
+        check('nombre','El nombre es obligatorio').not().isEmpty(),
         check('categoria','No es un id de Mongo').isMongoId(),
         check('categoria').custom( existeCategoriaPorId ),
         validarCampos
