@@ -27,7 +27,7 @@ router.post(
     '/',
     [
         check('categoria','No es un id de Mongo').isMongoId(),
-        ('categoria').custom( existeCategoriaPorId ),
+        check('categoria').custom( existeCategoriaPorId ),
         validarCampos
     ],
     crearSolicitud);
