@@ -24,7 +24,7 @@ router.post(
     '/',
     [
         validarJWT,
-        check('titulo', 'El titulo es obligatorio').not().isEmpty(),
+        check('nombre', 'El titulo es obligatorio').not().isEmpty(),
         check('categoria', 'La categoria es obligatorio').not().isEmpty(),
         check('descripcion', 'La descripcion es obligatorio').not().isEmpty(),
         check('fechaCreacion', 'Fecha de creacion de la actividad es obligatoria').not().isEmpty(),
