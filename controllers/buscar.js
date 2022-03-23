@@ -62,9 +62,9 @@ const buscarActivities = async( termino = '', res = response ) => {
                             .populate('categoria','nombre');
         
 
-        
-        const DDMMYY = activity.fechaRealizacion.split('/')
-        const HHMM = activity.hora.split(':')
+        const date = activity.fechaRealizacion.split(' ')
+        const DDMMYY = date[0].split('/')
+        const HHMM = date[1].split(':')
         const fecha = new Date(
             parseInt(DDMMYY[2]),
             parseInt(DDMMYY[1]) - 1,
@@ -90,8 +90,9 @@ const buscarActivities = async( termino = '', res = response ) => {
 
     
     activities.forEach((activity)=>{
-        const DDMMYY = activity.fechaRealizacion.split('/')
-        const HHMM = activity.hora.split(':')
+        const date = activity.fechaRealizacion.split(' ')
+        const DDMMYY = date[0].split('/')
+        const HHMM = date[1].split(':')
         const fecha = new Date(
             parseInt(DDMMYY[2]),
             parseInt(DDMMYY[1]) - 1,
