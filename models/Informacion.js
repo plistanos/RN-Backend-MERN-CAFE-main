@@ -3,7 +3,7 @@ const usuario = require('./usuario');
 
 
 const InformacionSchema = Schema({
-    titulo: {
+    nombre: {
         type: String,
         required: true
     },
