@@ -1,7 +1,8 @@
 const { response, request } = require('express');
-const { Activity } = require('../models');
+const { Activity, Usuario } = require('../models');
 const fs = require('fs');
-var tj = require('@mapbox/togeojson')
+var tj = require('@mapbox/togeojson');
+const { generarJWT } = require('../helpers');
 const DOMParser = require('xmldom').DOMParser;
 
 
@@ -89,15 +90,24 @@ const activityPatch = async( req = request, res = response ) => {
     activityData.participantes.push(data.usuario);
     data.ticketsDisponibles = ticketsDisponibles - 1;
     data.participantes = activityData.participantes;
+    const userData = await Usuario.findById(req.usuario._id)
 
+    userData.actividades.push(id)
+
+    const user = await Usuario.findByIdAndUpdate(data.usuario, userData, {new: true})
     const activity = await Activity.findByIdAndUpdate(id, data, { new: true });
-
+    const token = await generarJWT(user._id)
     await activity
         .populate('usuario', 'nombre')
         .populate('categoria', 'nombre')
         
         
-    res.json( activity );
+    res.json( {
+        ok:true,
+        actividad:activity,
+        usuario:user,
+        token
+    });
 
 }
 const actualizarActividad = async( req = request, res = response ) => {
