@@ -44,6 +44,7 @@ const crearSolicitud = async(req, res = response) => {
     data.ticketsDisponibles = data.tickets;
     data.usuario = req.usuario._id;
     data.participantes=[];
+    data.fechaCreacion=momentStart.format('DD/MM/YYYY HH:mm');
 
     const solicitud = new Solicitud( data );
 

@@ -61,6 +61,7 @@ const activityPut = async(req, res = response ) => {
     data.ticketsDisponibles = data.tickets;
     data.usuario = req.usuario._id;
     data.participantes=[];
+    
 
     const activity = new Activity( data );
 
