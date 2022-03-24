@@ -1,6 +1,6 @@
 const { response } = require("express");
 const Solicitud = require('../models/Solicitud')
-const moment=require("moment")
+const moment = require("moment")
 
 //Obtener Solicitudes
 const getSolicitudes = async(req, res = response) => {
@@ -45,7 +45,7 @@ const crearSolicitud = async(req, res = response) => {
     data.ticketsDisponibles = data.tickets;
     data.usuario = req.usuario._id;
     data.participantes=[];
-    data.fechaCreacion=moment().format('DD/MM/YYYY HH:mm');
+    data.fechaCreacion=moment().format('DD/MM/YYYY HH:mm').fromNow();
 
     const solicitud = new Solicitud( data );
 

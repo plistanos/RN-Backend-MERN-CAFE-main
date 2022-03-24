@@ -69,7 +69,7 @@ const SolicitudSchema = Schema({
     fechaCreacion:{
         type: String,
         
-        default: new Date(Date.now())
+        
     },
     fechaRealizacion:{
         type: String,
